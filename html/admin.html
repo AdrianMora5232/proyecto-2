@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrador - Gestión de Becas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body class="dashboard-layout">
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="nav-logo">AdminPanel</a>
+            <div class="nav-links">
+                <span>Administrador</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container main-content">
+        <!-- Stats -->
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card">
+                <h3>Convocatorias</h3>
+                <p id="total-scholarships" style="font-size: 2rem; font-weight: 700; color: var(--primary);">0</p>
+            </div>
+            <div class="card">
+                <h3>Postulaciones</h3>
+                <p id="total-applications" style="font-size: 2rem; font-weight: 700; color: var(--accent);">0</p>
+            </div>
+            <div class="card">
+                <h3>Usuarios</h3>
+                <p id="total-users" style="font-size: 2rem; font-weight: 700;">0</p>
+            </div>
+        </div>
+
+        <!-- Scholarships -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2>Gestión de Convocatorias</h2>
+            <button id="openScholarshipModal" class="btn btn-primary">+ Nueva Convocatoria</button>
+        </div>
+
+        <div class="table-container" style="margin-bottom: 3rem;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Vigencia</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="scholarships-table-body">
+                    <!-- Dynamic Content -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Evaluators (Simplified) -->
+        <h2>Evaluadores Registrados</h2>
+        <div id="evaluators-list"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <!-- Dynamic Content -->
+        </div>
+
+    </main>
+
+    <!-- Modal Scholarship -->
+    <div id="scholarshipModal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">Nueva Convocatoria</h2>
+            <form id="scholarshipForm">
+                <input type="hidden" id="s-id">
+
+                <div class="form-group">
+                    <label>Nombre de la Beca</label>
+                    <input type="text" id="s-name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea id="s-description" rows="3" required></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select id="s-type">
+                            <option value="academic">Académica</option>
+                            <option value="economic">Económica</option>
+                            <option value="social">Social</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Monto</label>
+                        <input type="number" id="s-amount" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Inicio</label>
+                        <input type="date" id="s-start" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cierre</label>
+                        <input type="date" id="s-end" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Estado</label>
+                    <select id="s-status">
+                        <option value="open">Abierta</option>
+                        <option value="closed">Cerrada</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Requisitos (uno por línea)</label>
+                    <textarea id="s-reqs" rows="4" placeholder="Ej: Promedio > 9.0&#10;Carta de Motivos"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="Admin.closeModal('scholarshipModal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel - Gestión de Becas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="dashboard-layout">
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="nav-logo">MiPortal</a>
+            <div class="nav-links">
+                <span>Postulante</span>
+                <button id="logoutBtn" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container main-content">
+        <!-- Available Scholarships -->
+        <h2 style="margin-bottom: 1.5rem;">Becas Disponibles</h2>
+        <div id="scholarships-grid" class="grid-container" style="margin-bottom: 3rem;">
+            <!-- Dynamic Cards -->
+        </div>
+
+        <!-- History -->
+        <h2 style="margin-bottom: 1.5rem;">Mis Postulaciones</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Beca</th>
+                        <th>Fecha Postulación</th>
+                        <th>Estado</th>
+                        <th>Notas del Evaluador</th>
+                    </tr>
+                </thead>
+                <tbody id="history-table-body">
+                    <!-- Dynamic Content -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Application Modal -->
+    <div id="app-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title" style="margin-bottom: 1rem;">Postular</h2>
+            <form id="applicationForm">
+                <input type="hidden" id="app-s-id">
+
+                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                    Al postular, sus datos de perfil (DNI, Teléfono) serán enviados para revisión.
+                    Por favor, añada cualquier comentario adicional o link a documentos requeridos.
+                </p>
+
+                <div class="form-group">
+                    <label>Comentarios / Links a Documentos</label>
+                    <textarea id="app-notes" rows="4"
+                        placeholder="Ej: Link a Google Drive con mis documentos..."></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="Applicant.closeModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar Postulación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/applicant.js"></script>
+</body>
+
+</html>
