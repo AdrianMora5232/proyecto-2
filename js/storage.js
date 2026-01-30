@@ -30,6 +30,26 @@ const Storage = {
         this.save(this.USERS, users);
     },
 
+    // Application Methods
+    getApplications() {
+        return this.get(this.APPLICATIONS) || [];
+    },
+
+    saveApplication(app) {
+        const apps = this.getApplications();
+        apps.push(app);
+        this.save(this.APPLICATIONS, apps);
+    },
+
+    updateApplication(updatedApp) {
+        const apps = this.getApplications();
+        const index = apps.findIndex(a => a.id === updatedApp.id);
+        if (index !== -1) {
+            apps[index] = updatedApp;
+            this.save(this.APPLICATIONS, apps);
+        }
+    },
+
     // Session
     setCurrentUser(user) {
         this.save(this.SESSION, user);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluación - Gestión de Becas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <style>
         .modal {
@@ -59,7 +59,7 @@
     <main class="container main-content">
         <h2 style="margin-bottom: 1.5rem;">Solicitudes Pendientes</h2>
 
-        <div class="table-container">
+        <div class="table-container" style="margin-bottom: 3rem;">
             <table>
                 <thead>
                     <tr>
@@ -71,6 +71,24 @@
                     </tr>
                 </thead>
                 <tbody id="reviews-table-body">
+                    <!-- Dynamic Content -->
+                </tbody>
+            </table>
+        </div>
+
+        <h2 style="margin-bottom: 1.5rem;">Historial de Evaluaciones</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Postulante</th>
+                        <th>Beca</th>
+                        <th>Fecha</th>
+                        <th>Comentarios Evaluador</th>
+                        <th>Estado Final</th>
+                    </tr>
+                </thead>
+                <tbody id="history-table-body">
                     <!-- Dynamic Content -->
                 </tbody>
             </table>
@@ -118,9 +136,10 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/storage.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/evaluator.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/evaluator.js"></script>
 </body>
 
 </html>
