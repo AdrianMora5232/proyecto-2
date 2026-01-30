@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     };
 
+
     // Manejo de login para Postulantes (Simulado)
     applicantForm.addEventListener('submit', (e) => {
         e.preventDefault();
