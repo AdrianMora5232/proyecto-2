@@ -2,11 +2,12 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Panel - Gestión de Becas</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="../css/estilo.css">
+
     <style>
         .modal {
             position: fixed;
@@ -77,25 +78,79 @@
 
     <!-- Application Modal -->
     <div id="app-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2 id="modal-title" style="margin-bottom: 1rem;">Postular</h2>
+        <div class="modal-content" style="max-width: 700px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 id="modal-title">Postular a Beca</h2>
+                <button onclick="Applicant.closeModal()"
+                    style="background:none; border:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+            </div>
+
             <form id="applicationForm">
                 <input type="hidden" id="app-s-id">
 
-                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-                    Al postular, sus datos de perfil (DNI, Teléfono) serán enviados para revisión.
-                    Por favor, añada cualquier comentario adicional o link a documentos requeridos.
-                </p>
+                <h3
+                    style="font-size: 1.1rem; color: var(--primary); margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                    1. Datos Personales</h3>
 
-                <div class="form-group">
-                    <label>Comentarios / Links a Documentos</label>
-                    <textarea id="app-notes" rows="4"
-                        placeholder="Ej: Link a Google Drive con mis documentos..."></textarea>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="app-name" readonly style="background-color: #f0f2f5;">
+                    </div>
+                    <div class="form-group">
+                        <label>Correo Electrónico</label>
+                        <input type="email" id="app-email" readonly style="background-color: #f0f2f5;">
+                    </div>
+                    <div class="form-group">
+                        <label>DNI / Identificación</label>
+                        <input type="text" id="app-dni" readonly style="background-color: #f0f2f5;">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="app-phone" readonly style="background-color: #f0f2f5;">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Nacimiento <span style="color:var(--danger)">*</span></label>
+                        <input type="date" id="app-dob" required>
+                    </div>
                 </div>
 
-                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <h3
+                    style="font-size: 1.1rem; color: var(--primary); margin: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                    2. Información Socioeconómica y Académica</h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Nivel Educativo Actual <span style="color:var(--danger)">*</span></label>
+                        <select id="app-education" required>
+                            <option value="">Seleccione...</option>
+                            <option value="secundaria">Secundaria</option>
+                            <option value="preparatoria">Preparatoria / Bachillerato</option>
+                            <option value="universidad">Universidad (Pregrado)</option>
+                            <option value="posgrado">Posgrado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingresos Mensuales Familiares ($) <span style="color:var(--danger)">*</span></label>
+                        <input type="number" id="app-income" placeholder="0.00" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Motivo de la Solicitud <span style="color:var(--danger)">*</span></label>
+                    <textarea id="app-reason" rows="3" placeholder="Explique brevemente por qué solicita esta beca..."
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Comentarios Adicionales / Enlaces a Documentos</label>
+                    <textarea id="app-notes" rows="2"
+                        placeholder="Ej: Link a Google Drive con boleta de calificaciones..."></textarea>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
                     <button type="button" class="btn btn-secondary" onclick="Applicant.closeModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Enviar Postulación</button>
+                    <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
                 </div>
             </form>
         </div>
@@ -105,6 +160,6 @@
     <script src="js/storage.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/applicant.js"></script>
-</body>
+ </body>
 
 </html>

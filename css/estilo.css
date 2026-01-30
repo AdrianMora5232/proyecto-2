@@ -255,3 +255,4 @@ tr:last-child td { border-bottom: none; }
 .badge-open, .badge-approved { background: rgba(0, 255, 128, 0.1); color: var(--success); }
 .badge-closed, .badge-rejected { background: rgba(255, 0, 85, 0.1); color: var(--danger); }
 .badge-pending { background: rgba(255, 187, 0, 0.1); color: var(--warning); }
+
