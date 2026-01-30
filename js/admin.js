@@ -80,7 +80,14 @@ const Admin = {
             start: document.getElementById('s-start').value,
             end: document.getElementById('s-end').value,
             status: document.getElementById('s-status').value,
-            reqs: document.getElementById('s-reqs').value.split('\n').filter(r => r.trim() !== '')
+            reqs1: document.getElementById('s-reqs1').value,
+            reqs2: document.getElementById('s-reqs2').value,
+            reqs3: document.getElementById('s-reqs3').value,
+            reqs4: document.getElementById('s-reqs4').value,
+            crit1: document.getElementById('s-crit1').value,
+            crit2: document.getElementById('s-crit2').value,
+            crit3: document.getElementById('s-crit3').value,
+            crit4: document.getElementById('s-crit4').value,
         };
 
         let scholarships = Storage.get(Storage.SCHOLARSHIPS) || [];
@@ -114,8 +121,14 @@ const Admin = {
             document.getElementById('s-start').value = s.start;
             document.getElementById('s-end').value = s.end;
             document.getElementById('s-status').value = s.status;
-            document.getElementById('s-reqs').value = s.reqs;
-
+            document.getElementById('s-reqs1').value = s.reqs1 || '';
+            document.getElementById('s-reqs2').value = s.reqs2 || '';
+            document.getElementById('s-reqs3').value = s.reqs3 || '';
+            document.getElementById('s-reqs4').value = s.reqs4 || '';
+            document.getElementById('s-crit1').value = s.crit1 || '';
+            document.getElementById('s-crit2').value = s.crit2 || '';
+            document.getElementById('s-crit3').value = s.crit3 || '';
+            document.getElementById('s-crit4').value = s.crit4 || '';
             this.openModal('scholarshipModal');
         }
     },
