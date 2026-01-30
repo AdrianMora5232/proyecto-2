@@ -78,25 +78,70 @@
 
     <!-- Application Modal -->
     <div id="app-modal" class="modal hidden">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 600px;">
             <h2 id="modal-title" style="margin-bottom: 1rem;">Postular</h2>
             <form id="applicationForm">
                 <input type="hidden" id="app-s-id">
 
-                <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
-                    Al postular, sus datos de perfil (DNI, Teléfono) serán enviados para revisión.
-                    Por favor, añada cualquier comentario adicional o link a documentos requeridos.
-                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="app-name" required placeholder="Su nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono de Contacto</label>
+                        <input type="tel" id="app-phone" required placeholder="Número de teléfono">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label>Tipo de Beca</label>
+                        <input type="text" id="app-s-type" disabled style="background: #f1f5f9;">
+                    </div>
+                    <div class="form-group">
+                        <label>Promedio Académico (0-100)</label>
+                        <input type="number" id="app-gpa" min="0" max="100" step="0.1" required placeholder="Min. 80">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <div class="form-group">
+                        <label>Monto Solicitado</label>
+                        <input type="number" id="app-amount" required placeholder="$0.00">
+                    </div>
+                    <div class="form-group">
+                        <label
+                            style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 1.5rem;">
+                            <input type="checkbox" id="app-is-minor" style="width: auto;">
+                            ¿Eres menor de edad?
+                        </label>
+                    </div>
+                </div>
+
+                <div id="guardian-fields" class="hidden">
+                    <div
+                        style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; background: #fefce8; padding: 1rem; border-radius: 8px;">
+                        <div class="form-group">
+                            <label>Nombre del Encargado</label>
+                            <input type="text" id="app-guardian-name" placeholder="Nombre completo">
+                        </div>
+                        <div class="form-group">
+                            <label>DNI del Encargado</label>
+                            <input type="text" id="app-guardian-dni" placeholder="Identificación">
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group">
-                    <label>Comentarios / Links a Documentos</label>
-                    <textarea id="app-notes" rows="4"
-                        placeholder="Ej: Link a Google Drive con mis documentos..."></textarea>
+                    <label>¿Por qué necesitas esta beca?</label>
+                    <textarea id="app-reason" rows="4" required
+                        placeholder="Escribe aquí tu justificación..."></textarea>
                 </div>
 
                 <div style="display: flex; gap: 1rem; justify-content: flex-end;">
                     <button type="button" class="btn btn-secondary" onclick="Applicant.closeModal()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Enviar Postulación</button>
+                    <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
                 </div>
             </form>
         </div>

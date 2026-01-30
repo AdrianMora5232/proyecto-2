@@ -27,7 +27,7 @@ const Evaluator = {
                     <td>${a.userName}</td>
                     <td>${s ? s.name : 'Desconocida'}</td>
                     <td>${a.date}</td>
-                    <td>${a.notes.substring(0, 30)}${a.notes.length > 30 ? '...' : ''}</td>
+                    <td>${(a.reason || '').substring(0, 30)}${(a.reason || '').length > 30 ? '...' : ''}</td>
                     <td>
                         <button class="btn btn-primary" onclick="Evaluator.openReviewModal('${a.id}')">Revisar</button>
                     </td>
@@ -73,9 +73,12 @@ const Evaluator = {
 
         document.getElementById('review-app-id').value = app.id;
         document.getElementById('applicant-name').textContent = app.userName;
-        document.getElementById('applicant-details').textContent = `Email: ${app.userId} | DNI: ${user ? user.dni : 'N/A'}`;
+        document.getElementById('applicant-gpa').textContent = `${app.gpa || 'N/A'}`;
+        document.getElementById('applicant-details').textContent = `Email: ${app.userId} | Tel: ${app.phone || 'N/A'}`;
+        document.getElementById('applicant-amount').textContent = `$${app.amountRequested || '0'}`;
         document.getElementById('scholarship-name').textContent = s ? s.name : 'Desconocida';
-        document.getElementById('applicant-notes').textContent = app.notes || 'Sin notas adicionales.';
+        document.getElementById('applicant-dates').textContent = `${app.startDate ? new Date(app.startDate).toLocaleString() : ''} - ${app.endDate ? new Date(app.endDate).toLocaleString() : ''}`;
+        document.getElementById('applicant-reason').textContent = app.reason || 'Sin justificación.';
 
         document.getElementById('review-modal').classList.remove('hidden');
     },

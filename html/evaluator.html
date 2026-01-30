@@ -100,18 +100,45 @@
         <div class="modal-content">
             <h2 style="margin-bottom: 1.5rem;">Evaluar Solicitud</h2>
 
-            <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem;">
-                <div class="data-label">POSTULANTE</div>
-                <div class="data-value" id="applicant-name"></div>
+            <div
+                style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                <div>
+                    <div class="data-label">POSTULANTE</div>
+                    <div class="data-value" id="applicant-name"></div>
+                </div>
+                <div>
+                    <div class="data-label">PROMEDIO</div>
+                    <div class="data-value" id="applicant-gpa"></div>
+                </div>
 
-                <div class="data-label">DETALLES</div>
-                <div class="data-value" id="applicant-details"></div>
+                <div>
+                    <div class="data-label">DETALLES</div>
+                    <div class="data-value" id="applicant-details"></div>
+                </div>
+                <div>
+                    <div class="data-label">MONTO SOLICITADO</div>
+                    <div class="data-value" id="applicant-amount"></div>
+                </div>
 
-                <div class="data-label">SOLICITA BECA</div>
-                <div class="data-value" id="scholarship-name"></div>
+                <div id="guardian-info" class="hidden"
+                    style="grid-column: span 2; background: #fffbeb; padding: 0.5rem; border-radius: 4px; margin-bottom: 1rem;">
+                    <div class="data-label">ENCARGADO (Menor de edad)</div>
+                    <div class="data-value" id="applicant-guardian"></div>
+                </div>
 
-                <div class="data-label">NOTAS DEL POSTULANTE</div>
-                <div class="data-value" id="applicant-notes"></div>
+                <div>
+                    <div class="data-label">SOLICITA BECA</div>
+                    <div class="data-value" id="scholarship-name"></div>
+                </div>
+                <div>
+                    <div class="data-label">VIGENCIA SUGERIDA</div>
+                    <div class="data-value" id="applicant-dates"></div>
+                </div>
+
+                <div style="grid-column: span 2;">
+                    <div class="data-label">MOTIVO DE SOLICITUD</div>
+                    <div class="data-value" id="applicant-reason" style="white-space: pre-wrap;"></div>
+                </div>
             </div>
 
             <form id="evaluationForm">

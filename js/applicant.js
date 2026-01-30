@@ -47,31 +47,76 @@ const Applicant = {
     },
 
     openModal(id, name) {
+        const scholarships = Storage.get(Storage.SCHOLARSHIPS) || [];
+        const s = scholarships.find(item => item.id === id);
+        const user = Storage.getCurrentUser();
+
         document.getElementById('app-s-id').value = id;
         document.getElementById('modal-title').textContent = `Postular a: ${name}`;
+        if (s) {
+            document.getElementById('app-s-type').value = s.type === 'academic' ? 'Académica' : (s.type === 'economic' ? 'Económica' : 'Social');
+        }
+
+        // Pre-fill user data
+        if (user) {
+            document.getElementById('app-name').value = user.name || '';
+            document.getElementById('app-phone').value = user.phone || '';
+        }
+
         document.getElementById('app-modal').classList.remove('hidden');
     },
 
     closeModal() {
         document.getElementById('app-modal').classList.add('hidden');
         document.getElementById('applicationForm').reset();
+        document.getElementById('guardian-fields').classList.add('hidden');
     },
 
     setupForm() {
         const form = document.getElementById('applicationForm');
+        const isMinorCheckbox = document.getElementById('app-is-minor');
+        const guardianFields = document.getElementById('guardian-fields');
+
+        if (isMinorCheckbox) {
+            isMinorCheckbox.addEventListener('change', (e) => {
+                if (e.target.checked) {
+                    guardianFields.classList.remove('hidden');
+                    document.getElementById('app-guardian-name').required = true;
+                    document.getElementById('app-guardian-dni').required = true;
+                } else {
+                    guardianFields.classList.add('hidden');
+                    document.getElementById('app-guardian-name').required = false;
+                    document.getElementById('app-guardian-dni').required = false;
+                }
+            });
+        }
+
         if (form) {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
+
+                const gpa = parseFloat(document.getElementById('app-gpa').value);
+                if (gpa < 80) {
+                    alert('Error: El promedio mínimo debe ser mayor a 80.');
+                    return;
+                }
+
                 const sId = document.getElementById('app-s-id').value;
-                const notes = document.getElementById('app-notes').value;
                 const user = Storage.getCurrentUser();
 
                 const newApp = {
                     id: Date.now().toString(),
                     scholarshipId: sId,
                     userId: user.email,
-                    userName: user.name,
-                    notes: notes,
+                    userName: document.getElementById('app-name').value,
+                    dni: user.dni,
+                    phone: document.getElementById('app-phone').value,
+                    gpa: gpa,
+                    amountRequested: document.getElementById('app-amount').value,
+                    isMinor: document.getElementById('app-is-minor').checked,
+                    guardianName: document.getElementById('app-guardian-name').value,
+                    guardianDni: document.getElementById('app-guardian-dni').value,
+                    reason: document.getElementById('app-reason').value,
                     date: new Date().toLocaleDateString(),
                     status: 'pending'
                 };
