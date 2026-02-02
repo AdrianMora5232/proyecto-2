@@ -7,6 +7,30 @@ const Evaluator = {
         console.log('Evaluator Dashboard Initialized');
         this.renderPendingApplications();
         this.renderEvaluationHistory();
+        this.setupScoreCalculation();
+    },
+
+    setupScoreCalculation() {
+        const inputs = document.querySelectorAll('.score-input');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => this.updateScoreTotal());
+        });
+    },
+
+    updateScoreTotal() {
+        const scoreEcon = parseInt(document.getElementById('score-econ').value) || 0;
+        const scoreAcad = parseInt(document.getElementById('score-acad').value) || 0;
+        const scoreSoc = parseInt(document.getElementById('score-soc').value) || 0;
+
+        const total = scoreEcon + scoreAcad + scoreSoc;
+        const totalDisplay = document.getElementById('score-total');
+        totalDisplay.textContent = total;
+
+        if (total < 70) {
+            totalDisplay.style.color = 'var(--danger)';
+        } else {
+            totalDisplay.style.color = 'var(--success)';
+        }
     },
 
     renderPendingApplications() {
@@ -56,7 +80,7 @@ const Evaluator = {
                     <td>${a.userName}</td>
                     <td>${s ? s.name : 'Desconocida'}</td>
                     <td>${a.date}</td>
-                    <td>${a.evaluatorNotes || 'Sin comentarios'}</td>
+                    <td><strong>${a.totalScore || 0}/100</strong></td>
                     <td><span class="badge badge-${a.status}">${a.status === 'approved' ? 'Aprobada' : 'Rechazada'}</span></td>
                 </tr>
             `;
@@ -86,19 +110,40 @@ const Evaluator = {
     closeModal() {
         document.getElementById('review-modal').classList.add('hidden');
         document.getElementById('evaluationForm').reset();
+        document.getElementById('score-total').textContent = '0';
     },
 
     submitEvaluation(status) {
         const appId = document.getElementById('review-app-id').value;
         const notes = document.getElementById('review-notes').value;
+
+        const scoreEcon = parseInt(document.getElementById('score-econ').value) || 0;
+        const scoreAcad = parseInt(document.getElementById('score-acad').value) || 0;
+        const scoreSoc = parseInt(document.getElementById('score-soc').value) || 0;
+
+        if (scoreEcon < 0 || scoreEcon > 40 || scoreAcad < 0 || scoreAcad > 30 || scoreSoc < 0 || scoreSoc > 30) {
+            alert('Por favor, ingrese puntajes dentro de los rangos permitidos.');
+            return;
+        }
+
+        const totalScore = scoreEcon + scoreAcad + scoreSoc;
+
+        if (totalScore < 70) {
+            alert('El puntaje total debe ser al menos de 70 para enviar la evaluación.');
+            return;
+        }
+
         const apps = Storage.getApplications();
         const app = apps.find(a => a.id === appId);
 
         if (app) {
             app.status = status;
             app.evaluatorNotes = notes;
+            app.scores = { econ: scoreEcon, acad: scoreAcad, soc: scoreSoc };
+            app.totalScore = totalScore;
+
             Storage.updateApplication(app);
-            alert(`Solicitud ${status === 'approved' ? 'Aprobada' : 'Rechazada'} con éxito.`);
+            alert(`Solicitud ${status === 'approved' ? 'Aprobada' : 'Rechazada'} con éxito. Puntaje Total: ${totalScore}/100`);
             this.closeModal();
             this.renderPendingApplications();
             this.renderEvaluationHistory();

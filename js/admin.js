@@ -9,6 +9,31 @@ const Admin = {
         this.setupEventListeners();
         this.renderStats();
         this.renderScholarships();
+        this.renderEvaluators();
+    },
+
+    renderEvaluators() {
+        const users = Storage.getUsers();
+        const evaluators = users.filter(u => u.role === 'evaluator');
+        const list = document.getElementById('evaluators-list');
+
+        if (!list) return;
+
+        if (evaluators.length === 0) {
+            list.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No hay evaluadores registrados.</p>';
+            return;
+        }
+
+        list.innerHTML = evaluators.map(e => `
+            <div class="card" style="padding: 1.5rem; border-left: 4px solid var(--primary);">
+                <h4 style="margin-bottom: 0.25rem;">${e.name}</h4>
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.5rem;">${e.email}</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
+                    <span>ID: ${e.workerId || 'N/A'}</span>
+                    <span class="badge badge-primary" style="background: var(--primary-light); color: white;">Evaluador</span>
+                </div>
+            </div>
+        `).join('');
     },
 
     setupEventListeners() {

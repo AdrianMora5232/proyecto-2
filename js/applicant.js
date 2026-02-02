@@ -12,17 +12,26 @@ const Applicant = {
 
     renderScholarships() {
         const scholarships = Storage.get(Storage.SCHOLARSHIPS) || [];
+        const apps = Storage.getApplications();
+        const user = Storage.getCurrentUser();
         const grid = document.getElementById('scholarships-grid');
-        grid.innerHTML = scholarships.map(s => `
-            <div class="card">
-                <h3>${s.name}</h3>
-                <p>${s.description}</p>
-                <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                    <span class="badge badge-open">Monto: $${s.amount}</span>
-                    <button class="btn btn-primary" onclick="Applicant.openModal('${s.id}', '${s.name}')">Postular</button>
+
+        grid.innerHTML = scholarships.map(s => {
+            const alreadyApplied = apps.find(a => a.userId === user.email && a.scholarshipId === s.id);
+            return `
+                <div class="card">
+                    <h3>${s.name}</h3>
+                    <p>${s.description}</p>
+                    <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                        <span class="badge badge-open">Monto: $${s.amount}</span>
+                        ${alreadyApplied
+                    ? `<button class="btn btn-secondary" disabled style="cursor: not-allowed; opacity: 0.7;">Ya postulado</button>`
+                    : `<button class="btn btn-primary" onclick="Applicant.openModal('${s.id}', '${s.name}')">Postular</button>`
+                }
+                    </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     },
 
     renderHistory() {
@@ -50,6 +59,13 @@ const Applicant = {
         const scholarships = Storage.get(Storage.SCHOLARSHIPS) || [];
         const s = scholarships.find(item => item.id === id);
         const user = Storage.getCurrentUser();
+        const apps = Storage.getApplications();
+
+        // Safety check
+        if (apps.find(a => a.userId === user.email && a.scholarshipId === id)) {
+            alert('Ya has postulado a esta beca.');
+            return;
+        }
 
         document.getElementById('app-s-id').value = id;
         document.getElementById('modal-title').textContent = `Postular a: ${name}`;
@@ -125,6 +141,7 @@ const Applicant = {
                 alert('Postulación enviada con éxito');
                 this.closeModal();
                 this.renderHistory();
+                this.renderScholarships();
             });
         }
     }
